@@ -3,23 +3,43 @@ from pygame.locals import *
 import time
 import pyautogui
 
+TaskSwitcher_statu = False
+
 def left():
-    pyautogui.keyDown('left')
+    pyautogui.press('left')
 def right():
-    pyautogui.keyDown('right')
+    pyautogui.press('right')
 def up():
-    pyautogui.keyDown('up')
+    pyautogui.press('up')
 def down():
-    pyautogui.keyDown('down')
+    pyautogui.press('down')
 def enter():
-    pyautogui.keyDown('enter')
+    pyautogui.press('enter')
+def slideshow():
+    pyautogui.press('f5')
+def Esc():
+    pyautogui.press('esc')
+def TaskSwitcher():
+    global TaskSwitcher_statu
+    if TaskSwitcher_statu == False:
+        pyautogui.keyDown('alt')
+        pyautogui.press('tab')
+        TaskSwitcher_statu = not(TaskSwitcher_statu)
+    else:
+        pyautogui.keyUp('alt')
+        TaskSwitcher_statu = not(TaskSwitcher_statu)
+
+
 
 switch={
 '3': left,
 '0': right,
 '1': up,
 '2': down,
-'15': enter
+'15': enter,
+'9': slideshow,
+'12': Esc,
+'14': TaskSwitcher        
 }
 
 

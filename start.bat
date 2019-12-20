@@ -1,1 +1,2 @@
 python joycon.py
+pause
