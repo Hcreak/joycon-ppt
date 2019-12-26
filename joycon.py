@@ -4,6 +4,7 @@ import time
 import pyautogui
 
 TaskSwitcher_statu = False
+dragleft_statu = False
 
 def left():
     pyautogui.press('left')
@@ -24,10 +25,17 @@ def TaskSwitcher():
     if TaskSwitcher_statu == False:
         pyautogui.keyDown('alt')
         pyautogui.press('tab')
-        TaskSwitcher_statu = not(TaskSwitcher_statu)
     else:
         pyautogui.keyUp('alt')
-        TaskSwitcher_statu = not(TaskSwitcher_statu)
+    TaskSwitcher_statu = not(TaskSwitcher_statu)
+def dragleft():
+    global dragleft_statu
+    if dragleft_statu == False:
+        pyautogui.hotkey('ctrl', 'l')
+    else:    
+        pyautogui.press('esc')
+    dragleft_statu = not(dragleft_statu)
+    
 
 
 
@@ -39,7 +47,8 @@ switch={
 '15': enter,
 '9': slideshow,
 '12': Esc,
-'14': TaskSwitcher        
+'14': TaskSwitcher,
+'11': dragleft        
 }
 
 
@@ -51,22 +60,34 @@ def main() :
     print ("joystick start")
 
     pygame.init()
-
+    pygame.event.set_allowed([QUIT,JOYBUTTONDOWN,JOYHATMOTION])
+    y,x = 0,0
+    
     while True:
 
-        eventlist = pygame.event.get()
+        if x!=0 or y!=0:
+            pyautogui.move(x*(-40),y*(-40))
 
+
+        eventlist = pygame.event.get()
         for e in eventlist:
             if e.type == QUIT:
                 return
 
-            if e.type == pygame.locals.JOYBUTTONDOWN:
+            if e.type == JOYBUTTONDOWN:
                 input_button = str(e.button)
                 print('button :{}'.format(input_button))
 
                 switch[input_button]()
+            
+            # if e.type == pygame.locals.JOYAXISMOTION:
+            #     print('axis {} : {}'.format(e.axis,e.value))
 
-        time.sleep(0.1)
+            if e.type == JOYHATMOTION:
+                position = e.value
+                print('hat : {}'.format(position))
+                y,x = position
+
 
 if __name__ == '__main__':
     try:
