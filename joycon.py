@@ -1,7 +1,8 @@
 import pygame
 from pygame.locals import *
-import time
+# import time
 import pyautogui
+import sys
 
 TaskSwitcher_statu = False
 dragleft_statu = False
@@ -52,7 +53,7 @@ switch={
 }
 
 
-def main() :
+def main():
     pygame.joystick.init()
     joystick0 = pygame.joystick.Joystick(0)
     joystick0.init()
@@ -61,6 +62,9 @@ def main() :
 
     pygame.init()
     pygame.event.set_allowed([QUIT,JOYBUTTONDOWN,JOYHATMOTION])
+   
+
+def threadfun():
     y,x = 0,0
     
     while True:
@@ -68,6 +72,8 @@ def main() :
         if x!=0 or y!=0:
             pyautogui.move(x*(-40),y*(-40))
 
+        # time.sleep(5)
+        # postquit()
 
         eventlist = pygame.event.get()
         for e in eventlist:
@@ -89,8 +95,14 @@ def main() :
                 y,x = position
 
 
+def postquit():
+    pygame.event.post(pygame.event.Event(QUIT))
+
 if __name__ == '__main__':
     try:
         main()
     except pygame.error:
         print ("joystick error")
+        sys.exit()
+    threadfun()
+    
