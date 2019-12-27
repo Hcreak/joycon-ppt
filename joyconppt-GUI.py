@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import Tkinter
 import tkMessageBox
+# import ScrolledText
 import PIL.Image
 import PIL.ImageTk
 # import time
@@ -36,6 +37,12 @@ def runscript():
     change_statu()
 
 root = Tkinter.Tk()
+# root.geometry('200x200')
+# root.geometry()
+
+root.resizable(False, False)
+root.title('JoyConPPT')
+root.iconbitmap('joyconppt.ico')
 
 im1 = PIL.Image.open('jc_right.png')
 im1.thumbnail((200,200))
@@ -45,8 +52,10 @@ im2.thumbnail((200,200))
 jcimage_on = PIL.ImageTk.PhotoImage(im2)
 
 SW = Tkinter.Button(root,image=jcimage_off,height=200,width=200,command=runscript)
+# logs = ScrolledText.ScrolledText(root,height=15,width=20)
 
-SW.pack()
+SW.grid(row=0)
+# logs.grid(row=0,column=1)
 
 # 进入消息循环
 root.mainloop()

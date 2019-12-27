@@ -58,7 +58,7 @@ def main():
     joystick0 = pygame.joystick.Joystick(0)
     joystick0.init()
 
-    print ("joystick start")
+    debugprint ("joystick start")
 
     pygame.init()
     pygame.event.set_allowed([QUIT,JOYBUTTONDOWN,JOYHATMOTION])
@@ -82,7 +82,7 @@ def threadfun():
 
             if e.type == JOYBUTTONDOWN:
                 input_button = str(e.button)
-                print('button :{}'.format(input_button))
+                debugprint('button :{}'.format(input_button))
 
                 switch[input_button]()
             
@@ -91,12 +91,18 @@ def threadfun():
 
             if e.type == JOYHATMOTION:
                 position = e.value
-                print('hat : {}'.format(position))
+                debugprint('hat : {}'.format(position))
                 y,x = position
 
 
 def postquit():
     pygame.event.post(pygame.event.Event(QUIT))
+
+def debugprint(text):
+    if __name__ == '__main__':
+        print(text)
+    else:
+        pass
 
 if __name__ == '__main__':
     try:
