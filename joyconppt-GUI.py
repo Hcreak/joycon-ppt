@@ -5,17 +5,26 @@ import ScrolledText
 import PIL.Image
 import PIL.ImageTk
 import sys
+import os
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 root = Tkinter.Tk()
 root.geometry('200x200')
 root.resizable(False, False)
 root.title('JoyConPPT')
-root.iconbitmap('joyconppt.ico')
+root.iconbitmap(resource_path('joyconppt.ico'))
 
-im1 = PIL.Image.open('jc_right.png')
+im1 = PIL.Image.open(resource_path('jc_right.png'))
 im1.thumbnail((200,200))
 jcimage_off = PIL.ImageTk.PhotoImage(im1)
-im2 = PIL.Image.open('jc_right_on.png')
+im2 = PIL.Image.open(resource_path('jc_right_on.png'))
 im2.thumbnail((200,200))
 jcimage_on = PIL.ImageTk.PhotoImage(im2)
 
